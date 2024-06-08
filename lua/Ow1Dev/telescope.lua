@@ -20,6 +20,11 @@ local function filenameFirst(_, path)
 	return string.format("%s\t\t%s", tail, parent)
 end
 
+local function keymaps()
+    local options = { noremap = true, silent = true }
+    vim.keymap.set('n', '<c-p>', '<CMD>lua require("telescope.builtin").git_files{}<CR>', options)
+end
+
 local function init()
 	require("telescope").setup({
 		defaults = {
@@ -129,6 +134,8 @@ local function init()
 			},
 		},
 	})
+
+  keymaps()
 end
 
 return {

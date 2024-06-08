@@ -33,6 +33,7 @@ rec {
     [
       # languages
       vimPlugins.nvim-lspconfig
+      vimPlugins.nvim-treesitter.withAllGrammars
 
       # telescope
       vimPlugins.plenary-nvim
