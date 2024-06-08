@@ -1,14 +1,11 @@
-{ inputs }:
-let
+{inputs}: let
   inherit (inputs.nixpkgs) legacyPackages;
-in
-rec {
-  mkVimPlugin = { system }:
-    let
-      inherit (pkgs) vimUtils;
-      inherit (vimUtils) buildVimPlugin;
-      pkgs = legacyPackages.${system};
-    in
+in rec {
+  mkVimPlugin = {system}: let
+    inherit (pkgs) vimUtils;
+    inherit (vimUtils) buildVimPlugin;
+    pkgs = legacyPackages.${system};
+  in
     buildVimPlugin {
       name = "Ow1Dev";
       postInstall = ''
@@ -24,49 +21,47 @@ rec {
       src = ../.;
     };
 
-  mkNeovimPlugins = { system }:
-    let
-      inherit (pkgs) vimPlugins;
-      pkgs = legacyPackages.${system};
-      Ow1Dev-nvim = mkVimPlugin { inherit system; };
-    in
-    [
-      # languages
-      vimPlugins.nvim-lspconfig
-      vimPlugins.nvim-treesitter.withAllGrammars
-      vimPlugins.none-ls-nvim
+  mkNeovimPlugins = {system}: let
+    inherit (pkgs) vimPlugins;
+    pkgs = legacyPackages.${system};
+    Ow1Dev-nvim = mkVimPlugin {inherit system;};
+  in [
+    # languages
+    vimPlugins.nvim-lspconfig
+    vimPlugins.nvim-treesitter.withAllGrammars
+    vimPlugins.none-ls-nvim
 
-      #Snippets
-      vimPlugins.luasnip
-      vimPlugins.cmp_luasnip
-      vimPlugins.friendly-snippets
+    #Snippets
+    vimPlugins.luasnip
+    vimPlugins.cmp_luasnip
+    vimPlugins.friendly-snippets
 
-      # Autocompletion
-      vimPlugins.nvim-cmp
-      vimPlugins.cmp-buffer
-      vimPlugins.cmp-path
-      vimPlugins.cmp-nvim-lsp
-      vimPlugins.cmp-nvim-lua
-      vimPlugins.cmp-emoji
-      vimPlugins.nvim-autopairs
+    # Autocompletion
+    vimPlugins.nvim-cmp
+    vimPlugins.cmp-buffer
+    vimPlugins.cmp-path
+    vimPlugins.cmp-nvim-lsp
+    vimPlugins.cmp-nvim-lua
+    vimPlugins.cmp-emoji
+    vimPlugins.nvim-autopairs
 
-      # telescope
-      vimPlugins.plenary-nvim
-      vimPlugins.popup-nvim
-      vimPlugins.telescope-nvim
-      vimPlugins.telescope-fzf-native-nvim
+    # telescope
+    vimPlugins.plenary-nvim
+    vimPlugins.popup-nvim
+    vimPlugins.telescope-nvim
+    vimPlugins.telescope-fzf-native-nvim
 
-      # theme
-      vimPlugins.catppuccin-nvim
-      vimPlugins.lualine-nvim
+    # theme
+    vimPlugins.catppuccin-nvim
+    vimPlugins.lualine-nvim
 
-      # extra
-      vimPlugins.neogit
-      vimPlugins.oil-nvim
+    # extra
+    vimPlugins.neogit
+    vimPlugins.oil-nvim
 
-      # configuration
-      Ow1Dev-nvim
-    ];
+    # configuration
+    Ow1Dev-nvim
+  ];
 
   mkExtraPackages = {system}: let
     pkgs = import inputs.nixpkgs {
@@ -74,12 +69,13 @@ rec {
       config.allowUnfree = true;
     };
   in [
-      # language servers
-      pkgs.lua-language-server
-      pkgs.nil
+    # language servers
+    pkgs.lua-language-server
+    pkgs.nil
 
-      # extra
-      pkgs.fzf
+    # extra
+    pkgs.fzf
+    pkgs.alejandra
   ];
 
   mkExtraConfig = ''
@@ -88,17 +84,16 @@ rec {
     EOF
   '';
 
-  mkNeovim = { system }:
-    let
-      inherit (pkgs) lib neovim;
-      pkgs = legacyPackages.${system};
-      extraPackages = mkExtraPackages {inherit system;};
-      start = mkNeovimPlugins { inherit system; };
-    in
+  mkNeovim = {system}: let
+    inherit (pkgs) lib neovim;
+    pkgs = legacyPackages.${system};
+    extraPackages = mkExtraPackages {inherit system;};
+    start = mkNeovimPlugins {inherit system;};
+  in
     neovim.override {
       configure = {
         customRC = mkExtraConfig;
-        packages.main = { inherit start; };
+        packages.main = {inherit start;};
       };
       extraMakeWrapperArgs = ''--suffix PATH : "${lib.makeBinPath extraPackages}"'';
       withNodeJs = true;

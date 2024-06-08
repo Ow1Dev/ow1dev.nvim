@@ -70,6 +70,11 @@ local default_diagnostic_config = {
 	},
 }
 
+local function keymaps()
+    local options = { noremap = true, silent = true }
+    vim.keymap.set('n', '<leader>f', "<cmd>lua vim.lsp.buf.format({async = true, filter = function(client) return client.name ~= 'typescript-tools' end})<cr>", options)
+end
+
 local function init()
 	vim.diagnostic.config(default_diagnostic_config)
 
@@ -95,6 +100,8 @@ local function init()
 
 		lspconfig[server].setup(opts)
 	end
+
+  keymaps()
 end
 
 return {
