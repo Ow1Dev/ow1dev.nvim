@@ -76,6 +76,7 @@ rec {
   in [
       # language servers
       pkgs.lua-language-server
+      pkgs.nil
 
       # extra
       pkgs.fzf
@@ -90,8 +91,8 @@ rec {
   mkNeovim = { system }:
     let
       inherit (pkgs) lib neovim;
-      extraPackages = mkExtraPackages {inherit system;};
       pkgs = legacyPackages.${system};
+      extraPackages = mkExtraPackages {inherit system;};
       start = mkNeovimPlugins { inherit system; };
     in
     neovim.override {

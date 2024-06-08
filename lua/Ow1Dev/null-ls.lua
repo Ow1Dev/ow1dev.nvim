@@ -7,7 +7,7 @@ local function init()
 		debug = true,
 		sources = {
 			formatting.stylua,
-			formatting.nixpkgs_fmt,
+			formatting.alejandra,
 			null_ls.builtins.completion.spell,
 		},
 	})
