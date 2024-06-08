@@ -12,8 +12,6 @@
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      debug = true;
-
       flake = {
         lib = import ./lib {inherit inputs;};
       };
