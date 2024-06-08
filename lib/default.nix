@@ -60,6 +60,10 @@ rec {
       vimPlugins.catppuccin-nvim
       vimPlugins.lualine-nvim
 
+      # extra
+      vimPlugins.neogit
+      vimPlugins.oil-nvim
+
       # configuration
       Ow1Dev-nvim
     ];

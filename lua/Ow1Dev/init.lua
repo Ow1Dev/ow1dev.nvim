@@ -7,6 +7,8 @@ local function init()
     require 'Ow1Dev.lspconfig'.init()
     require 'Ow1Dev.null-ls'.init()
     require 'Ow1Dev.cmp'.init()
+    require 'Ow1Dev.neogit'.init()
+    require 'Ow1Dev.oil'.init()
 end
 
 return {
