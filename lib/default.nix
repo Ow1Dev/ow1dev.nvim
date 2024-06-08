@@ -58,6 +58,7 @@ rec {
 
       # theme
       vimPlugins.catppuccin-nvim
+      vimPlugins.lualine-nvim
 
       # configuration
       Ow1Dev-nvim
