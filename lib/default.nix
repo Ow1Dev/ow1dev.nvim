@@ -34,6 +34,21 @@ rec {
       # languages
       vimPlugins.nvim-lspconfig
       vimPlugins.nvim-treesitter.withAllGrammars
+      vimPlugins.none-ls-nvim
+
+      #Snippets
+      vimPlugins.luasnip
+      vimPlugins.cmp_luasnip
+      vimPlugins.friendly-snippets
+
+      # Autocompletion
+      vimPlugins.nvim-cmp
+      vimPlugins.cmp-buffer
+      vimPlugins.cmp-path
+      vimPlugins.cmp-nvim-lsp
+      vimPlugins.cmp-nvim-lua
+      vimPlugins.cmp-emoji
+      vimPlugins.nvim-autopairs
 
       # telescope
       vimPlugins.plenary-nvim
@@ -54,6 +69,10 @@ rec {
       config.allowUnfree = true;
     };
   in [
+      # language servers
+      pkgs.lua-language-server
+
+      # extra
       pkgs.fzf
   ];
 
