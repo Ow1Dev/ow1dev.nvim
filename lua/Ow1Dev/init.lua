@@ -9,6 +9,8 @@ local function init()
     require 'Ow1Dev.cmp'.init()
     require 'Ow1Dev.neogit'.init()
     require 'Ow1Dev.oil'.init()
+    require 'Ow1Dev.notify'.init()
+    require 'Ow1Dev.noice'.init()
 end
 
 return {

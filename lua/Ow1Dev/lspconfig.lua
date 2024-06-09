@@ -73,6 +73,7 @@ local default_diagnostic_config = {
 local function keymaps()
     local options = { noremap = true, silent = true }
     vim.keymap.set('n', '<leader>f', "<cmd>lua vim.lsp.buf.format({async = true, filter = function(client) return client.name ~= 'typescript-tools' end})<cr>", options)
+    vim.keymap.set('n', '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<cr>", options)
 end
 
 local function init()

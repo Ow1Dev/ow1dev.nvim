@@ -23,6 +23,9 @@ end
 local function keymaps()
     local options = { noremap = true, silent = true }
     vim.keymap.set('n', '<c-p>', '<CMD>lua require("telescope.builtin").git_files{}<CR>', options)
+    vim.keymap.set('n', '<leader>fd', '<CMD>lua require("telescope.builtin").diagnostics()<CR>', options)
+    vim.keymap.set('n', '<leader>fl', '<CMD>lua require("telescope.builtin").live_grep()<CR>', options)
+    vim.keymap.set('n', '<leader>lsl', '<CMD>lua require("telescope.builtin").lsp_code_actions{}<CR>', options)
 end
 
 local function init()

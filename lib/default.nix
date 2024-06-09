@@ -54,6 +54,8 @@ in rec {
     # theme
     vimPlugins.catppuccin-nvim
     vimPlugins.lualine-nvim
+    vimPlugins.nvim-notify
+    vimPlugins.noice-nvim
 
     # extra
     vimPlugins.neogit
@@ -73,9 +75,12 @@ in rec {
     pkgs.lua-language-server
     pkgs.nil
 
+    # formatters
+    pkgs.alejandra
+    pkgs.stylua
+
     # extra
     pkgs.fzf
-    pkgs.alejandra
   ];
 
   mkExtraConfig = ''
