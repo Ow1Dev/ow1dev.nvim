@@ -3,13 +3,13 @@
 - Run `neovim` directly with:
 
 ```shell
-$ nix run github:ALT-F4-LLC/ow1dev.nvim#neovim
+$ nix run github:Ow1Dev/ow1dev.nvim#neovim
 ```
 
 - Run `neovim` in new shell with:
 
 ```shell
-$ nix shell github:ALT-F4-LLC/ow1dev.nvim#neovim
+$ nix shell github:Ow1Dev/ow1dev.nvim#neovim
 $ neovim
 ```
 
