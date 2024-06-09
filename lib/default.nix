@@ -81,6 +81,7 @@ in rec {
 
     # extra
     pkgs.fzf
+    pkgs.ripgrep
   ];
 
   mkExtraConfig = ''

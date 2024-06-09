@@ -1,4 +1,4 @@
-local icons = require("user.icons")
+local icons = require("Ow1Dev.icons")
 
 local function keymaps()
     local options = { noremap = true, silent = true }

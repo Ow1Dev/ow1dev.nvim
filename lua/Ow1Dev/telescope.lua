@@ -1,4 +1,4 @@
-local icons = require("user.icons")
+local icons = require('Ow1Dev.icons')
 local actions = require("telescope.actions")
 
 vim.api.nvim_create_autocmd("FileType", {
