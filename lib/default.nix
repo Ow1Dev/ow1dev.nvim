@@ -74,6 +74,7 @@ in rec {
     # language servers
     pkgs.lua-language-server
     pkgs.nil
+    pkgs.rust-analyzer
 
     # formatters
     pkgs.alejandra
