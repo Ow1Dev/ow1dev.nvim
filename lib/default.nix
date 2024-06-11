@@ -60,6 +60,7 @@ in rec {
     # extra
     vimPlugins.neogit
     vimPlugins.oil-nvim
+    vimPlugins.gitsigns-nvim
 
     # configuration
     Ow1Dev-nvim
