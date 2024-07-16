@@ -71,12 +71,14 @@ in rec {
       inherit system;
       config.allowUnfree = true;
     };
+    nodePackages = pkgs.nodePackages;
   in [
     # language servers
     pkgs.lua-language-server
     pkgs.nil
     pkgs.rust-analyzer
     pkgs.yaml-language-server
+    nodePackages.typescript-language-server
 
     # formatters
     pkgs.alejandra
