@@ -113,7 +113,6 @@ in rec {
     };
 
   mkHomeManager = {system}: let
-    pkgs = import inputs.nixpkgs;
     extraConfig = mkExtraConfig;
     extraPackages = mkExtraPackages {inherit system;};
     plugins = mkNeovimPlugins {inherit system;};
@@ -121,7 +120,6 @@ in rec {
     inherit extraConfig extraPackages plugins;
     defaultEditor = true;
     enable = true;
-    package = pkgs.neovim-unwrapped;
     withNodeJs = true;
     withPython3 = true;
     withRuby = true;
