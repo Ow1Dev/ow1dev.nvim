@@ -1,4 +1,4 @@
-{inputs, pkgs}: let
+{inputs}: let
   inherit (inputs.nixpkgs) legacyPackages;
 in rec {
   mkVimPlugin = {system}: let
@@ -112,7 +112,7 @@ in rec {
       withRuby = true;
     };
 
-  mkHomeManager = {system, package ? pkgs.neovim}: let
+  mkHomeManager = {system}: let
     extraConfig = mkExtraConfig;
     extraPackages = mkExtraPackages {inherit system;};
     plugins = mkNeovimPlugins {inherit system;};
@@ -120,7 +120,6 @@ in rec {
     inherit extraConfig extraPackages plugins;
     defaultEditor = true;
     enable = true;
-    package = package;
     withNodeJs = true;
     withPython3 = true;
     withRuby = true;
