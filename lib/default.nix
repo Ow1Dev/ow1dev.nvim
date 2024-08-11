@@ -112,13 +112,14 @@ in rec {
       withRuby = true;
     };
 
-  mkHomeManager = {system}: let
+  mkHomeManager = {system, neovim-pkg}: let
     extraConfig = mkExtraConfig;
     extraPackages = mkExtraPackages {inherit system;};
     plugins = mkNeovimPlugins {inherit system;};
   in {
     inherit extraConfig extraPackages plugins;
     defaultEditor = true;
+    package = neovim-pkg;
     enable = true;
     withNodeJs = true;
     withPython3 = true;
