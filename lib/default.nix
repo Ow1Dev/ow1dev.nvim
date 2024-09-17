@@ -56,6 +56,7 @@ in rec {
     vimPlugins.lualine-nvim
     vimPlugins.nvim-notify
     vimPlugins.noice-nvim
+    vimPlugins.nui-nvim
 
     # extra
     vimPlugins.neogit
