@@ -10,7 +10,7 @@ local function init()
     require 'Ow1Dev.neogit'.init()
     require 'Ow1Dev.oil'.init()
     require 'Ow1Dev.notify'.init()
-    -- require 'Ow1Dev.noice'.init()
+    require 'Ow1Dev.noice'.init()
     require 'Ow1Dev.gitsigns'.init()
 end
 
