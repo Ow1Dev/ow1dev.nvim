@@ -1,16 +1,52 @@
-local function lsp_keymaps(bufnr)
-	local opts = { noremap = true, silent = true }
-	local keymap = vim.api.nvim_buf_set_keymap
-	keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+local function autocmd(args)
+    local event = args[1]
+    local group = args[2]
+    local callback = args[3]
+
+    vim.api.nvim_create_autocmd(event, {
+        group = group,
+        buffer = args[4],
+        callback = function()
+            callback()
+        end,
+        once = args.once,
+    })
+end
+
+local function lsp_keymaps(client, buffer)
+  local augroup_highlight = vim.api.nvim_create_augroup("custom-lsp-references", { clear = true })
+  local autocmd_clear = vim.api.nvim_clear_autocmds
+
+  local opts = { buffer = buffer, remap = false }
+
+  -- Enable completion triggered by <c-x><c-o>
+  vim.bo[buffer].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+  vim.keymap.set('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, opts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+  vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, opts)
+
+  if client.server_capabilities.documentHighlightProvider then
+    autocmd_clear { group = augroup_highlight, buffer = buffer }
+    autocmd { "CursorHold", augroup_highlight, vim.lsp.buf.document_highlight, buffer }
+    autocmd { "CursorMoved", augroup_highlight, vim.lsp.buf.clear_references, buffer }
+  end
 end
 
 local function on_attach(client, bufnr)
-	lsp_keymaps(bufnr)
+	lsp_keymaps(client, bufnr)
 end
 
 local function common_capabilities()
@@ -40,7 +76,7 @@ local servers = {
 	"lua_ls",
 	"gopls",
 	"nil_ls",
-	"tsserver",
+	"ts_ls",
 	"svelte",
 	"yamlls",
 	"rust_analyzer",
@@ -70,12 +106,6 @@ local default_diagnostic_config = {
 	},
 }
 
-local function keymaps()
-    local options = { noremap = true, silent = true }
-    vim.keymap.set('n', '<leader>f', "<cmd>lua vim.lsp.buf.format({async = true, filter = function(client) return client.name ~= 'typescript-tools' end})<cr>", options)
-    vim.keymap.set('n', '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<cr>", options)
-end
-
 local function init()
 	vim.diagnostic.config(default_diagnostic_config)
 
@@ -101,8 +131,6 @@ local function init()
 
 		lspconfig[server].setup(opts)
 	end
-
-  keymaps()
 end
 
 return {
