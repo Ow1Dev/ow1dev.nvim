@@ -79,6 +79,7 @@ in rec {
     pkgs.nil
     pkgs.rust-analyzer
     pkgs.yaml-language-server
+    pkgs.gopls
     nodePackages.typescript-language-server
 
     # formatters
